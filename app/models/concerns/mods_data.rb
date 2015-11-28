@@ -35,13 +35,14 @@ module ModsData
   def mods_to_solr
     data = self.mods_raw
     return {} unless data
-    return {} unless self["id"]
+    return {} unless self["druid"]
     solr_doc = {}
-    solr_doc["id"] = self["id"]
-    solr_doc["druid"] = self["id"]
-    solr_doc["url_sfx"] = self["purl"]
-    solr_doc["manifest_urls"] = self["manifest"]
-    solr_doc["collection"] = self.collection
+    solr_doc["id"] = self["druid"]
+    solr_doc["druid"] = self["druid"]
+    solr_doc["url_sfx"] = self["mods_url"]
+    solr_doc["manifest_urls"] = self["iiif_manifest"]
+    solr_doc["collection"] = self["collection"]
+    solr_doc["model"] = "Manuscript"
     solr_doc["abstract_search"] = data.abstract.text
     solr_doc["access_condition_search"] = data.accessCondition.text
     solr_doc["genre_search"] = data.sw_genre
@@ -65,7 +66,7 @@ module ModsData
     #solr_doc["relateditem_location_url_display"] = data.relateditem_location_url
     #solr_doc["relateditem_title_search"] = data.relateditem_title
     solr_doc["pub_date"] = data.pub_dates
-    solr_doc["pub_date_t"] = data.pub_date_facet
+    #solr_doc["pub_date_t"] = data.pub_date_facet #This does not give a ISO fomrat date
     solr_doc["pub_year_t"] = data.pub_year
     #solr_doc["publishers_search"] = data.publishers
     solr_doc["place_search"] = data.place
